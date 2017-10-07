@@ -1,26 +1,71 @@
+$sidebar-size: 52px;
+$layer-size: 172px;
+@mixin calc-position($pos, $hoverPos) {
+    background-position: 0 $pos;
+    &:hover {
+        background-position: 0 $hoverPos;
+    }
+}
+
+@import "mixin";
+
 .sidebar {
-	.sidebar-item {
-		
-	}
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: - $sidebar-size / 2;
+    @include translate(0, -50%);
+    .sidebar-item {
+        display: block;
+        width: $sidebar-size;
+        height: $sidebar-size;
+        background-image: url(../images/toolbar.png);
+        background-repeat: no-repeat;
+        margin-top: 1px;
+        position: relative;
+        @include transition(0.3s);
+        &:hover {
+            .sidebar-layer {
+                @include opacity(1);
+                @include scale(1);
+            }
+        }
+    }
 
-	.sidebar-item-weixin{
-		.sidebar-layer {
+    .sidebar-layer {
+        position: absolute;
+        left: - $layer-size;
+        bottom: -6px;
+        width: $layer-size;
+        background-image: url(../images/toolbar.png);
+        background-repeat: no-repeat;
+        @include opacity(0);
+        @include scale(0.01);
+        @include transition(0.3s);
+        @include transform-origin(right, bottom);
+    }
 
-		}
-	}
+    .sidebar-item-weixin {
+        @include calc-position(-798px, -860px);
+        .sidebar-layer {
+            height: 212px;
+            background-position: 0 0;
+        }
+    }
 
-	.sidebar-item-feedback{
+    .sidebar-item-feedback {
+        @include calc-position(-426px, -488px);
+    }
 
-	}
+    .sidebar-item-app {
+        @include calc-position(-550px, -612px);
+        .sidebar-layer {
+            height: 194px;
+            background-position: 0 -222px;
+        }
+    }
 
-	.sidebar-item-app{
-		.sidebar-layer {
-
-		}
-	}
-
-	.sidebar-item-top{
-
-	}
-
+    .sidebar-item-top {
+        @include calc-position(-674px, -736px);
+    }
 }
