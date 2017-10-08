@@ -1,0 +1,143 @@
+@charset "UTF-8";
+
+$sidebar-size: 52px;
+$layer-size: 172px;
+@mixin calc-position($pos, $hoverPos) {
+    background-position: 0 $pos;
+    &:hover {
+        background-position: 0 $hoverPos;
+    }
+}
+
+@import "mixin";
+@import "../fonts/icon";
+
+.sidebar {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: - $sidebar-size / 2;
+    @include translate(0, -50%);
+    .sidebar-item {
+        position: relative;
+        display: block;
+        width: $sidebar-size;
+        height: $sidebar-size;
+        margin-top: 1px;
+        &:hover {
+            .sidebar-btn {
+                &:before {
+                    top: -$sidebar-size;
+                }
+                &:after {
+                    top: 0;
+                }
+            }
+            &:after {
+                @include opacity(1);
+                @include scale(1);
+            }
+        }
+        &:after {
+            content: "";
+            position: absolute;
+            left: -$layer-size;
+            bottom: -6px;
+            width: $layer-size;
+            background-image: url(../images/toolbar_img.png);
+            background-repeat: no-repeat;
+            @include opacity(0);
+            @include transform-origin(right, bottom);
+            @include scale(0.01);
+            @include transition(0.3s);
+        }
+        .sidebar-btn {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: $sidebar-size;
+            height: $sidebar-size;
+            overflow: hidden;
+            /* 字体公共样式 */
+            font-family: 'sidebar' !important;
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            &:before, &:after {
+                content: "";
+                position: absolute;
+                left: 0;
+                width: $sidebar-size;
+                height: $sidebar-size;
+                color: #FFF;
+                text-align: center;
+                @include transition(0.3s);
+            }
+            &:before {
+                top: 0;
+                background-color: #d0d6d9;
+                font-size: 30px;
+                line-height: $sidebar-size;  
+            }
+
+            &:after {
+                top: $sidebar-size;
+                background-color: #98a1a6;
+                font-size: 12px;
+                line-height: 1.2;
+                padding-top: 12px;
+                white-space: pre;
+            }
+        }
+        &.sidebar-item-weixin {
+            &:after {
+                content: "";
+                height: 212px;
+                background-position: 0 0;
+            }
+            .sidebar-btn {
+                @extend .icon-wechat;
+                &:after {
+                    content: "公众\A账号";
+                }
+            }
+        }
+
+        &.sidebar-item-feedback {
+            .sidebar-btn {
+                @extend .icon-concat;
+                &:after {
+                    content: "意见\A反馈";
+                }
+            }
+        }
+
+        &.sidebar-item-app {
+            &:after {
+                content: "";
+                height: 194px;
+                background-position: 0 -222px;
+            }
+            .sidebar-btn {
+                @extend .icon-app;
+                &:after {
+                    content: "APP\A下载";
+                }
+            }
+        }
+
+        &.sidebar-item-top {
+            .sidebar-btn {
+                @extend .icon-top;
+                &:after {
+                    content: "返回\A顶部";
+                }
+            }
+        }
+    }
+}
