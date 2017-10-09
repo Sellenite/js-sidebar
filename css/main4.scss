@@ -1,0 +1,94 @@
+$sidebar-size: 52px;
+$layer-size: 172px;
+@mixin calc-position($pos, $hoverPos) {
+    background-position: 0 $pos;
+    &:hover {
+        background-position: 0 $hoverPos;
+    }
+}
+
+@import "mixin";
+
+.sidebar {
+    position: fixed;
+    top: 50%;
+    right: 2px;
+    @include translate(0, -50%);
+    .sidebar-item {
+        position: relative;
+        display: block;
+        width: $sidebar-size;
+        height: $sidebar-size;
+        margin-top: 1px;
+        &:hover {
+            .sidebar-icon {
+                top: -$sidebar-size !important;
+            }
+
+            .sidebar-text {
+                top: 0 !important;
+            }
+
+            .sidebar-layer {
+                @include opacity(1);
+                @include scale(1);
+            }
+        }
+        .sidebar-btn {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: $sidebar-size;
+            height: $sidebar-size;
+            overflow: hidden;
+            .sidebar-icon, .sidebar-text {
+                position: absolute;
+                left: 0;
+                width: $sidebar-size;
+                height: $sidebar-size;
+                color: #FFF;
+                text-align: center;
+                @include transition(0.3s);
+            }
+            .sidebar-icon {
+                top: 0;
+                background-color: #d0d6d9;
+                font-size: 30px;
+                line-height: $sidebar-size;   
+            }
+
+            .sidebar-text {
+                top: $sidebar-size;
+                background-color: #98a1a6;
+                font-size: 12px;
+                padding-top: 12px;
+                line-height: 1.2;
+            }
+        }
+
+        .sidebar-layer {
+            position: absolute;
+            width: $layer-size;
+            left: -$layer-size;
+            bottom: -6px;
+            background-image: url(../images/toolbar_img.png);
+            background-repeat: no-repeat;
+            @include opacity(0);
+            @include scale(0.01);
+            @include transition(0.3s);
+            @include transform-origin(right, bottom);
+            &.sidebar-layer-weixin {
+                height: 212px;
+                background-position: 0 0;
+            }
+
+            &.sidebar-layer-app {
+                height: 194px;
+                background-position: 0 -222px;
+            }
+        }
+    }
+    #backTop {
+        display: none;
+    }
+}
